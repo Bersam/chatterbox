@@ -6,11 +6,21 @@ import Gravatar from 'react-gravatar'
 import Moment from 'react-moment'
 
 class Home extends React.Component {
+  static async getInitialProps({ req }) {
+    const response = await fetch('http://localhost:8000/chat/')
+    const messages = await response.json()
+    return { messages }
+  }
+
+  static defaultProps = {
+    messages: [],
+  }
+
   state = {
     username: 'DefaultUser',
     email: '',
     input: '',
-    messages: [],
+    messages: this.props.messages,
     loading: true,
   }
 
