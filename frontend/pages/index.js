@@ -8,30 +8,19 @@ import Messages from '../components/messages'
 import Panel from '../components/panel'
 
 class Home extends React.Component {
-  static async getInitialProps({ req }) {
-    const response = await fetch('http://localhost:8000/chat/')
-    const messages = await response.json()
-
-    const fakename = await Faker.name.findName();
-    const fakeemail = await Faker.internet.email();
-    return { messages, fakename, fakeemail }
-  }
-
-  static defaultProps = {
-    messages: [],
-  }
-
   state = {
-    username: this.props.fakename,
-    email: this.props.fakeemail,
+    username: '',
+    email: '',
     input: '',
-    messages: this.props.messages,
+    messages: [],
     loading: true,
     filter: '',
   }
 
   // connect to WS server and listen event
   componentDidMount() {
+    this.fetchLastMessages()
+    this.fetchUsername()
     this.connect()
   }
 
@@ -41,6 +30,20 @@ class Home extends React.Component {
       this.socket.close()
     }
   }
+
+  fetchLastMessages = async () => {
+    const response = await fetch('http://localhost:8000/chat/')
+    const messages = await response.json()
+    this.setState({messages})
+  }
+
+  fetchUsername = async () => {
+    const username = await Faker.name.findName();
+    const email = await Faker.internet.email();
+    this.setState({email, username })
+
+  }
+
 
   connect = () => {
     if (this.socket) {
