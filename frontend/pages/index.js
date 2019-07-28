@@ -3,6 +3,7 @@ import fetch from 'isomorphic-fetch'
 import Head from 'next/head'
 import { Container, Button, Comment, Form, Header } from 'semantic-ui-react'
 import Gravatar from 'react-gravatar'
+import Moment from 'react-moment'
 
 class Home extends React.Component {
   state = {
@@ -76,14 +77,14 @@ class Home extends React.Component {
               {this.state.username}
             </Header>
             {this.state.messages.map((message) => (
-              <Comment>
+              <Comment key={message.timestamp}>
                 <div className="avatar">
                   <Gravatar email="bersam.k@gmail.com" className="avatar" size={200} />
                 </div>
                 <Comment.Content>
                   <Comment.Author as='a'>{message.username}</Comment.Author>
                   <Comment.Metadata>
-                    <div>{message.timestamp}</div>
+                    <Moment date={message.timestamp} fromNow/>
                   </Comment.Metadata>
                   <Comment.Text>{message.message}</Comment.Text>
                 </Comment.Content>
