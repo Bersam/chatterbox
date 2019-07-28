@@ -42,7 +42,7 @@ class Home extends React.Component {
       }
 
       this.socket.onmessage = e => {
-        console.log(e.data)
+        this.handleMessage(JSON.parse(e.data))
       }
 
       this.socket.onerror = e => {
@@ -90,7 +90,6 @@ class Home extends React.Component {
     // add it to state and clean current input value
     this.setState(state => ({
       input: '',
-      messages: state.messages.concat(message)
     }))
   }
 
