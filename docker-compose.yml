@@ -1,0 +1,42 @@
+version: '2.1'
+
+services:
+  redis:
+    image: redis
+  
+  postgres:
+    image: postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 3s
+      timeout: 3s
+      retries: 5
+
+  frontend:
+    build: ./frontend
+    command: >
+      bash -c "npm install &&
+               npm run build &&
+               npm run export"
+    volumes:
+      - ./frontend:/frontend
+
+  backend:
+    restart: always
+    environment:
+      - DJANGO_SECRET_KEY=r)!3+biui0=z48h7wkki=t+8g4^!gury@o3n5xhc(7nkrpk=kw
+      - DJANGO_DATABASE_URL=postgres://postgres@postgres:5432/postgres
+      - DJANGO_REDIS_HOST=redis
+    build: ./backend
+    command: >
+      bash -c "./manage.py migrate &&
+               ./manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ./backend:/backend
+      - ./frontend:/frontend
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+

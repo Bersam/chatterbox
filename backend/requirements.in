@@ -1,0 +1,6 @@
+Django
+psycopg2
+dj_database_url
+channels
+channels-redis
+djangorestframework
