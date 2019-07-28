@@ -1,5 +1,7 @@
-# chat/routing.py
-from django.conf.urls import url
+from django.urls import path
+
+from .consumers import ChatConsumer
 
 websocket_urlpatterns = [
+    path('chat/<slug:user_name>/', ChatConsumer),
 ]
