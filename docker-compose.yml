@@ -1,6 +1,8 @@
 version: '2.1'
 
 services:
+  redis:
+    image: redis
   postgres:
     image: postgres
     healthcheck:
@@ -13,6 +15,7 @@ services:
     environment:
       - DJANGO_SECRET_KEY=r)!3+biui0=z48h7wkki=t+8g4^!gury@o3n5xhc(7nkrpk=kw
       - DJANGO_DATABASE_URL=postgres://postgres@postgres:5432/postgres
+      - DJANGO_REDIS_HOST=redis
     image: web
     build: ./
     command: >
