@@ -8,6 +8,7 @@ import Moment from 'react-moment'
 class Home extends React.Component {
   state = {
     username: 'DefaultUser',
+    email: '',
     input: '',
     messages: [],
   }
@@ -49,6 +50,7 @@ class Home extends React.Component {
 
     const message = {
       timestamp: (new Date()).getTime(),
+      email: this.state.email,
       message: this.state.input,
       username: this.state.username
     }
@@ -79,7 +81,7 @@ class Home extends React.Component {
             {this.state.messages.map((message) => (
               <Comment key={message.timestamp}>
                 <div className="avatar">
-                  <Gravatar email="bersam.k@gmail.com" className="avatar" size={200} />
+                  <Gravatar email={message.email} className="avatar" size={200} />
                 </div>
                 <Comment.Content>
                   <Comment.Author as='a'>{message.username}</Comment.Author>
