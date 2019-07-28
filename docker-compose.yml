@@ -11,7 +11,8 @@ services:
   web:
     restart: always
     environment:
-      - DJANGO_SECRET_KEY=local
+      - DJANGO_SECRET_KEY=r)!3+biui0=z48h7wkki=t+8g4^!gury@o3n5xhc(7nkrpk=kw
+      - DJANGO_DATABASE_ADDRESS=postgres
     image: web
     build: ./
     command: >
