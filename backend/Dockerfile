@@ -6,7 +6,7 @@ COPY ./requirements.in /requirements.in
 RUN pip install -r /requirements.in
 
 # Adds our application code to the image
-COPY ./backend /backend/
+COPY . /backend/
 WORKDIR /backend
 
 EXPOSE 8000

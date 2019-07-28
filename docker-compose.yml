@@ -3,6 +3,7 @@ version: '2.1'
 services:
   redis:
     image: redis
+  
   postgres:
     image: postgres
     healthcheck:
@@ -10,18 +11,15 @@ services:
       interval: 3s
       timeout: 3s
       retries: 5
+
   frontend:
     build: ./frontend
     command: >
       bash -c "npm install &&
                npm run build &&
-               npm run export""
+               npm run export"
     volumes:
       - ./frontend:/frontend
-    ports:
-      - "8000:8000"
-    depends_on:
-      - backend
 
   backend:
     restart: always
@@ -41,3 +39,4 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+
