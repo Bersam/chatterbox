@@ -22,3 +22,4 @@ db.sqlite3
 ### Javascript/React
 
 node_modules/
+.next
