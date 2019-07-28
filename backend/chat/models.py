@@ -1,3 +1,18 @@
 from django.db import models
+from django.utils import timezone
 
-# Create your models here.
+
+class User(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+
+class Message(models.Model):
+    user = models.ForeignKey(User, related_name="messages", on_delete=models.PROTECT)
+    text = models.TextField()
+    timestamp = models.DateTimeField(default=timezone.now, db_index=True)
+
+    def __str__(self):
+        return "{0}: {1}".format(self.user, self.text)
