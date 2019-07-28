@@ -16,10 +16,10 @@ venv/
 
 # Visual Studio Code
 .vscode
-
 db.sqlite3
 
 ### Javascript/React
 
 node_modules/
 .next
+out/
