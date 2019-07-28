@@ -56,7 +56,7 @@ class Home extends React.Component {
     }
 
     // send object to WS server
-    // this.socket.send(message)
+    this.socket.send(JSON.stringify(message))
 
     // add it to state and clean current input value
     this.setState(state => ({
