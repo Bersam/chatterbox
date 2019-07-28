@@ -11,12 +11,12 @@ class Home extends React.Component {
     email: '',
     input: '',
     messages: [],
+    loading: true,
   }
 
   // connect to WS server and listen event
   componentDidMount() {
     this.connect()
-
   }
 
   // close socket connection
@@ -38,21 +38,28 @@ class Home extends React.Component {
 
       this.socket.onopen = () => {
         console.log("WebSocket open")
+        this.setState({ loading: false })
       }
+
       this.socket.onmessage = e => {
         console.log(e.data)
       }
+
       this.socket.onerror = e => {
         console.log(e.message)
       }
+
       this.socket.onclose = () => {
         console.log("WebSocket closed, trying to reconnect")
+        this.setState({ loading: true })
         this.socket = null
         setTimeout(this.connect, 3000)
       }
+
     } catch (error) {
       setTimeout(this.connect, 3000)
     }
+
     return this.socket
   }
 
@@ -116,7 +123,7 @@ class Home extends React.Component {
             ))}
             <Form reply>
               <Form.TextArea onChange={this.handleChange} value={this.state.input}/>
-              <Button content='Add Reply' labelPosition='left' icon='edit' primary onClick={this.handleSubmit} />
+              <Button content='Add Reply' labelPosition='left' icon='edit' primary onClick={this.handleSubmit} disabled={this.state.loading}/>
             </Form>
           </Comment.Group>
         </Container>
