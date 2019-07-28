@@ -14,7 +14,7 @@ class Home extends React.Component {
 
   // connect to WS server and listen event
   componentDidMount() {
-    this.socket = new WebSocket('ws://localhost:8000/chat/'+this.state.username)
+    this.socket = new WebSocket(`ws://localhost:8000/chat/${this.state.username}/`)
     this.socket.onopen = () => {
       console.log("WebSocket open");
     };
