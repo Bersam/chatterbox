@@ -15,25 +15,47 @@ class Home extends React.Component {
 
   // connect to WS server and listen event
   componentDidMount() {
-    this.socket = new WebSocket(`ws://localhost:8000/chat/${this.state.username}/`)
-    this.socket.onopen = () => {
-      console.log("WebSocket open");
-    };
-    this.socket.onmessage = e => {
-      console.log(e.data);
-    };
-    this.socket.onerror = e => {
-      console.log(e.message);
-    };
-    this.socket.onclose = () => {
-      console.log("WebSocket is closed");
-    };
+    this.connect()
+
   }
 
   // close socket connection
   componentWillUnmount() {
-    this.socket.close();
+    if (this.socket) {
+      this.socket.close()
+    }
   }
+
+  connect = () => {
+    if (this.socket) {
+      return this.socket
+    }
+
+    console.log("trying to connect to websocket...")
+
+    try {
+      this.socket = new WebSocket(`ws://localhost:8000/chat/${this.state.username}/`)
+
+      this.socket.onopen = () => {
+        console.log("WebSocket open")
+      }
+      this.socket.onmessage = e => {
+        console.log(e.data)
+      }
+      this.socket.onerror = e => {
+        console.log(e.message)
+      }
+      this.socket.onclose = () => {
+        console.log("WebSocket closed, trying to reconnect")
+        this.socket = null
+        setTimeout(this.connect, 3000)
+      }
+    } catch (error) {
+      setTimeout(this.connect, 3000)
+    }
+    return this.socket
+  }
+
 
   // add messages from server to the state
   handleMessage = (message) => {
@@ -41,7 +63,7 @@ class Home extends React.Component {
   }
 
   handleChange = event => {
-    this.setState({ input: event.target.value });
+    this.setState({ input: event.target.value })
   }
 
   // send messages to server and add them to the state
@@ -103,4 +125,4 @@ class Home extends React.Component {
   }
 }
 
-export default Home;
+export default Home
