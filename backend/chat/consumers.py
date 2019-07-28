@@ -37,7 +37,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         message = data['message']
         username = data['username']
         email = data['email']
-        timestamp = data['timestamp']
+        timestamp_str = data['timestamp']
 
         print("'{0}' sent a message to the channel".format(username))
 
@@ -46,7 +46,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             user.email = email
             user.save()
 
-        timestamp = datetime.utcfromtimestamp(timestamp / 1000)
+        timestamp = datetime.utcfromtimestamp(timestamp_str / 1000)
 
         Message.objects.create(message=message, timestamp=timestamp, user=user)
 
@@ -58,15 +58,22 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 'message': message,
                 'username': username,
                 'email': email,
-                'timestamp': timestamp
+                'timestamp': timestamp_str
             }
         )
 
     # Receive message from room group
     async def chat_message(self, event):
         message = event['message']
+        username = event['username']
+        email = event['email']
+        timestamp_str = event['timestamp']
 
         # Send message to WebSocket
         await self.send(text_data=json.dumps({
-            'message': message
+            'type': 'chat_message',
+            'message': message,
+            'username': username,
+            'email': email,
+            'timestamp': timestamp_str
         }))
