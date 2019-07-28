@@ -1,6 +1,7 @@
 import React from 'react'
 import fetch from 'isomorphic-fetch'
 import Head from 'next/head'
+import Faker from 'faker'
 import { Container, Grid, Button, Form, Header, Divider } from 'semantic-ui-react'
 
 import Messages from '../components/messages'
@@ -10,7 +11,10 @@ class Home extends React.Component {
   static async getInitialProps({ req }) {
     const response = await fetch('http://localhost:8000/chat/')
     const messages = await response.json()
-    return { messages }
+
+    const fakename = await Faker.name.findName();
+    const fakeemail = await Faker.internet.email();
+    return { messages, fakename, fakeemail }
   }
 
   static defaultProps = {
@@ -18,8 +22,8 @@ class Home extends React.Component {
   }
 
   state = {
-    username: 'DefaultUser',
-    email: '',
+    username: this.props.fakename,
+    email: this.props.fakeemail,
     input: '',
     messages: this.props.messages,
     loading: true,
@@ -124,7 +128,7 @@ class Home extends React.Component {
             <Grid.Row>
               <Grid.Column width={12}>
                 <Header as='h3' dividing>
-                  {this.state.username} {this.state.email && `<${this.state.email}>`}
+                  {this.state.username} {this.state.email && `(${this.state.email})`}
                 </Header>
 
                 <Messages messages={this.state.messages} />
