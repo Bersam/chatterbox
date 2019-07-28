@@ -1,6 +1,10 @@
 from channels.generic.websocket import AsyncWebsocketConsumer
 
 import json
+from datetime import datetime
+
+
+from .models import Message, User
 
 
 class ChatConsumer(AsyncWebsocketConsumer):
@@ -36,6 +40,15 @@ class ChatConsumer(AsyncWebsocketConsumer):
         timestamp = data['timestamp']
 
         print("'{0}' sent a message to the channel".format(username))
+
+        user, _ = User.objects.get_or_create(name = username)
+        if email:
+            user.email = email
+            user.save()
+
+        timestamp = datetime.utcfromtimestamp(timestamp / 1000)
+
+        Message.objects.create(message=message, timestamp=timestamp, user=user)
 
         # Send message to room group
         await self.channel_layer.group_send(
