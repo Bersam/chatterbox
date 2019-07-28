@@ -45,7 +45,7 @@ class Home extends React.Component {
     console.log("trying to connect to websocket...")
 
     try {
-      this.socket = new WebSocket(`ws://localhost:8000/chat/${this.state.username}/`)
+      this.socket = new WebSocket(`ws://localhost:8000/chat/`)
 
       this.socket.onopen = () => {
         console.log("WebSocket open")
@@ -123,17 +123,17 @@ class Home extends React.Component {
           <Grid divided>
             <Grid.Row>
               <Grid.Column width={12}>
-            <Header as='h3' dividing>
+                <Header as='h3' dividing>
                   {this.state.username} {this.state.email && `<${this.state.email}>`}
-            </Header>
+                </Header>
 
                 <Messages messages={this.state.messages} />
 
                 <Divider />
-            <Form reply>
+                <Form reply>
                   <Form.TextArea name='message' onChange={this.handleChangeInput} value={this.state.input} />
                   <Button content='Add Reply' labelPosition='left' icon='edit' primary onClick={this.handleSendMessage} disabled={this.state.loading} />
-            </Form>
+                </Form>
               </Grid.Column>
               <Grid.Column width={4}>
 
