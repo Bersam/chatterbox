@@ -5,10 +5,10 @@ import { string, shape, arrayOf } from 'prop-types';
 import Message from './message'
 
 
-const Messages = ({ messages }) => (
+const Messages = ({ messages, filter }) => (
   <Comment.Group size='big' minimal style={{overflow: 'auto', maxHeight: '70vh', maxWidth: '100%'}}>
     {messages.map((message) => (
-      <Message message={message} key={message.timestamp} />
+      <Message message={message} key={message.timestamp} filter={filter} />
     ))}
   </Comment.Group>
 )
@@ -21,7 +21,8 @@ Message.propTypes = {
       timestamp: string.isRequired,
       email: string,
     })
-  }).isRequired
+  }).isRequired,
+  filter: string
 };
 
 export default Messages

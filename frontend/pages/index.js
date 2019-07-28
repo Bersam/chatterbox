@@ -27,6 +27,7 @@ class Home extends React.Component {
     input: '',
     messages: this.props.messages,
     loading: true,
+    filter: '',
   }
 
   // connect to WS server and listen event
@@ -92,8 +93,24 @@ class Home extends React.Component {
     this.setState({ username: event.target.value })
   }
 
-  handleChangeEmail = event => {Panel
+  handleChangeEmail = event => {
     this.setState({ email: event.target.value })
+  }
+
+  handleChangeFilter = event => {
+    this.setState({ filter: event.target.value })
+  }
+
+  handleSearch = async () => {
+    const response = await fetch(`http://localhost:8000/chat/?search=${this.state.filter}`)
+    const messages = await response.json()
+    this.setState({messages: messages})
+  }
+
+  handleReset = async () => {
+    const response = await fetch(`http://localhost:8000/chat/`)
+    const messages = await response.json()
+    this.setState({messages: messages})
   }
 
   // send messages to server and add them to the state
@@ -131,7 +148,7 @@ class Home extends React.Component {
                   {this.state.username} {this.state.email && `(${this.state.email})`}
                 </Header>
 
-                <Messages messages={this.state.messages} />
+                <Messages messages={this.state.messages} filter={this.state.filter}/>
 
                 <Divider />
                 <Form reply>
@@ -144,7 +161,12 @@ class Home extends React.Component {
                 <Panel handleChangeUsername={this.handleChangeUsername}
                   username={this.state.username}
                   handleChangeEmail={this.handleChangeEmail}
-                  email={this.state.email} />
+                  email={this.state.email}
+                  handleChangeFilter={this.handleChangeFilter}
+                  filter={this.state.filter}
+                  handleSearch={this.handleSearch}
+                  handleReset={this.handleReset}
+                  />
 
               </Grid.Column>
             </Grid.Row>
