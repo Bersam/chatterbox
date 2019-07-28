@@ -1,0 +1,27 @@
+version: '2.1'
+
+services:
+  postgres:
+    image: postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 3s
+      timeout: 3s
+      retries: 5
+  web:
+    restart: always
+    environment:
+      - DJANGO_SECRET_KEY=r)!3+biui0=z48h7wkki=t+8g4^!gury@o3n5xhc(7nkrpk=kw
+      - DJANGO_DATABASE_ADDRESS=postgres
+    image: web
+    build: ./
+    command: >
+      bash -c "./manage.py migrate &&
+               ./manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ./backend:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy

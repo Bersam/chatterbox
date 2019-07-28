@@ -1,0 +1,20 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Unit test / coverage reports
+.pytest_cache/
+.coverage
+
+# Django stuff:
+*.log
+
+
+# Environments
+venv/
+
+# Visual Studio Code
+.vscode
+
+db.sqlite3
