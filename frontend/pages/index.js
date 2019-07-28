@@ -1,9 +1,10 @@
 import React from 'react'
 import fetch from 'isomorphic-fetch'
 import Head from 'next/head'
-import { Container, Button, Comment, Form, Header } from 'semantic-ui-react'
-import Gravatar from 'react-gravatar'
-import Moment from 'react-moment'
+import { Container, Grid, Button, Form, Header, Divider } from 'semantic-ui-react'
+
+import Messages from '../components/messages'
+import Panel from '../components/panel'
 
 class Home extends React.Component {
   static async getInitialProps({ req }) {
@@ -79,12 +80,20 @@ class Home extends React.Component {
     this.setState(state => ({ messages: state.messages.concat(message) }))
   }
 
-  handleChange = event => {
+  handleChangeInput = event => {
     this.setState({ input: event.target.value })
   }
 
+  handleChangeUsername = event => {
+    this.setState({ username: event.target.value })
+  }
+
+  handleChangeEmail = event => {Panel
+    this.setState({ email: event.target.value })
+  }
+
   // send messages to server and add them to the state
-  handleSubmit = event => {
+  handleSendMessage = event => {
     event.preventDefault()
 
     const message = {
@@ -98,10 +107,9 @@ class Home extends React.Component {
     this.socket.send(JSON.stringify(message))
 
     // add it to state and clean current input value
-    this.setState(state => ({
-      input: '',
-    }))
+    this.setState({ input: '' })
   }
+
 
   render() {
     return (
@@ -111,30 +119,32 @@ class Home extends React.Component {
           <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css" />
           <meta charSet="utf-8" />
         </Head>
-        <Container textAlign='left'>
-          <Comment.Group size='massive' minimal>
+        <Container style={{ marginTop: 10 }}>
+          <Grid divided>
+            <Grid.Row>
+              <Grid.Column width={12}>
             <Header as='h3' dividing>
-              {this.state.username}
+                  {this.state.username} {this.state.email && `<${this.state.email}>`}
             </Header>
-            {this.state.messages.map((message) => (
-              <Comment key={message.timestamp}>
-                <div className="avatar">
-                  <Gravatar email={message.email} className="avatar" size={200} />
-                </div>
-                <Comment.Content>
-                  <Comment.Author as='a'>{message.username}</Comment.Author>
-                  <Comment.Metadata>
-                    <Moment date={message.timestamp} fromNow/>
-                  </Comment.Metadata>
-                  <Comment.Text>{message.message}</Comment.Text>
-                </Comment.Content>
-              </Comment>
-            ))}
+
+                <Messages messages={this.state.messages} />
+
+                <Divider />
             <Form reply>
-              <Form.TextArea onChange={this.handleChange} value={this.state.input}/>
-              <Button content='Add Reply' labelPosition='left' icon='edit' primary onClick={this.handleSubmit} disabled={this.state.loading}/>
+                  <Form.TextArea name='message' onChange={this.handleChangeInput} value={this.state.input} />
+                  <Button content='Add Reply' labelPosition='left' icon='edit' primary onClick={this.handleSendMessage} disabled={this.state.loading} />
             </Form>
-          </Comment.Group>
+              </Grid.Column>
+              <Grid.Column width={4}>
+
+                <Panel handleChangeUsername={this.handleChangeUsername}
+                  username={this.state.username}
+                  handleChangeEmail={this.handleChangeEmail}
+                  email={this.state.email} />
+
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
         </Container>
       </React.Fragment>
     )
