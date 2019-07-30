@@ -4,3 +4,4 @@ dj_database_url
 channels
 channels-redis
 djangorestframework
+websocket-client
