@@ -17,3 +17,11 @@ docker-compose up
 
 Wait to docker build up database and code containers, then open following address in your browser:
 [http://localhost:8000](http://localhost:8000)
+
+# Testing the project
+
+To run tests for http and websocket endpoints run following command:
+
+```bash
+docker-compose run --rm backend ./manage.py test
+```
