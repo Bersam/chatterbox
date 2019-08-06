@@ -1,0 +1,146 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`With Snapshot Testing Home shows messages component and panel" 1`] = `
+<div
+  className="ui container"
+  style={
+    Object {
+      "marginTop": 10,
+    }
+  }
+>
+  <div
+    className="ui divided grid"
+  >
+    <div
+      className="row"
+    >
+      <div
+        className="twelve wide column"
+      >
+        <h3
+          className="ui dividing header"
+        >
+          
+           
+          
+        </h3>
+        <div
+          className="ui big minimal comments"
+          style={
+            Object {
+              "maxHeight": "70vh",
+              "maxWidth": "100%",
+              "overflow": "auto",
+            }
+          }
+        />
+        <div
+          className="ui divider"
+        />
+        <form
+          className="ui reply form"
+          onSubmit={[Function]}
+        >
+          <div
+            className="field"
+          >
+            <textarea
+              name="message"
+              onChange={[Function]}
+              onInput={[Function]}
+              rows={3}
+              value=""
+            />
+          </div>
+          <button
+            className="ui icon primary disabled left labeled button"
+            disabled={true}
+            onClick={[Function]}
+            tabIndex={-1}
+          >
+            <i
+              aria-hidden="true"
+              className="edit icon"
+              onClick={[Function]}
+            />
+            Add Reply
+          </button>
+        </form>
+      </div>
+      <div
+        className="four wide column"
+      >
+        <form
+          className="ui reply form"
+          onSubmit={[Function]}
+        >
+          <div
+            className="field"
+          >
+            <label>
+              Username
+            </label>
+            <input
+              onChange={[Function]}
+              value=""
+            />
+          </div>
+          <div
+            className="field"
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+          >
+            <label>
+              Email
+            </label>
+            <input
+              onChange={[Function]}
+              value=""
+            />
+          </div>
+          <div
+            className="ui divider"
+          />
+          <div
+            className="field"
+          >
+            <label>
+              Filter
+            </label>
+            <input
+              onChange={[Function]}
+              value=""
+            />
+          </div>
+          <button
+            className="ui icon primary left labeled button"
+            onClick={[Function]}
+          >
+            <i
+              aria-hidden="true"
+              className="search icon"
+              onClick={[Function]}
+            />
+            Search
+          </button>
+          <button
+            className="ui icon primary left labeled button"
+            onClick={[Function]}
+          >
+            <i
+              aria-hidden="true"
+              className="edit icon"
+              onClick={[Function]}
+            />
+            Reset
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+`;
