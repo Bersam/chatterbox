@@ -22,6 +22,12 @@ Wait to docker build up database and code containers, then open following addres
 
 To run tests for http and websocket endpoints run following command:
 
+## Run Backend Tests
 ```bash
 docker-compose run --rm backend ./manage.py test
+```
+
+## Run Frontend Tests
+```bash
+docker-compose run --rm frontend npm run test
 ```
