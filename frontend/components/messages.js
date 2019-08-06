@@ -21,7 +21,7 @@ Message.propTypes = {
       timestamp: string.isRequired,
       email: string,
     })
-  }).isRequired,
+  }),
   filter: string
 };
 
