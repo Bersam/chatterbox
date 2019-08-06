@@ -4,8 +4,6 @@ This is a socket based chat application written in Django and React.
 # Prerequisites
 
 - [Docker](https://docs.docker.com/v17.12/install/)
-- [NPM](https://nodejs.org/en/download/)
-
 
 # Initialize the project
 
